@@ -13,7 +13,7 @@ function fetch_github_html_cached($atts)
     );
 
     if (empty($atts['url'])) {
-        return '<p style="color:red;">Error: GitHub URL is required.</p>';
+        return 'Error: GitHub URL is required.';
     }
 
     $cache_key = 'github_html_' . md5($atts['url']);
@@ -26,13 +26,13 @@ function fetch_github_html_cached($atts)
     $response = wp_remote_get($atts['url']);
 
     if (is_wp_error($response)) {
-        return '<p style="color:red;">Error fetching data from GitHub.</p>';
+        return 'Error fetching data from GitHub.';
     }
 
     $body = wp_remote_retrieve_body($response);
 
     if (empty($body)) {
-        return '<p style="color:red;">No content retrieved from GitHub.</p>';
+        return 'No content retrieved from GitHub.';
     }
 
     $body = wp_kses_post($body);
@@ -42,4 +42,4 @@ function fetch_github_html_cached($atts)
     return $body;
 }
 
-add_shortcode('github_html_cache', 'fetch_github_html_cached');
+add_shortcode('github_html', 'fetch_github_html_cached');
